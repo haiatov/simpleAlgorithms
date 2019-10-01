@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="js/Search.js"></script>
+    <script src="js/Sort.js"></script>
+    <script src="js/Sets.js"></script>
+    <title>Algorithms</title>
+</head>
+<body>
+    
+    <script>
+        let numbers = [];
+        let a,b,c,d,e;
+
+        // ------------------------ SORT ------------------------
+
+        
+        // Sort - select | Сортировка - выбором
+        numbers = [7, 4, 3, 5, 6, 2, 1];
+        console.assert(Sort.select(numbers).join('') === '1234567', 'Bad select sort!');
+
+        // Sort - quick | Сортировка - быстрая
+        numbers = [9, 1, 8, 2, 3, 6, 5, 4, 7];
+        console.assert(Sort.quick(numbers).join('') === '123456789', 'Bad quick sort!');
+
+
+
+
+
+        // ------------------------ SEARCH ------------------------
+
+
+        // Search - binary | Поиск - бинарный поиск
+        numbers = [0, 1, 2, 3, 10.5, 100, 200];
+        console.assert(Search.binary(numbers, 10.5) === 4, '10.5 is 4th!');
+        console.assert(Search.binary(numbers, 100) === 5, '100 is 5th!');
+        console.assert(Search.binary(numbers, 200) === 6, '200 is 6th!');
+
+        // Search - wide | Поиск - в ширину
+        a = { isFruit: false, name: 'a' };
+        b = { isFruit: false, name: 'b' };
+        c = { isFruit: true, name: 'c' };
+        d = { isFruit: false, name: 'd' };
+        e = { isFruit: true, name: 'e' };
+        a.links = [b, c];
+        b.links = [d, e];
+        d.links = [a, e];
+        console.assert(Search.wide(a, 'isFruit', true).name === 'c', 'Object with name "c" is closest node!');
+
+        // Search - Dijkstra | Поиск - Дейкстры
+        a = { name: 'a' };
+        b = { name: 'b' };
+        c = { name: 'c' };
+        d = { name: 'd' };
+        a.links = [
+            { node: b, weight: 3 },
+            { node: c, weight: 1 }
+        ];
+        b.links = [
+            { node: d, weight: 3 }
+        ];
+        c.links = [
+            { node: b, weight: 1 }
+        ];
+        console.assert(Search.dijkstra(a, d) === 5, 'Shortest way is 5!');
+
+
+        
+        // ------------------------ SETS ------------------------
+
+
+        // Sets - greedy algorithm for NP task | Множества - жадный алгоритм для покрытия штатов радиостанциями
+        let mt = 'mt', wa = 'wa', or = 'or', id = 'id', nv = 'nv', ut = 'ut', ca = 'ca', az = 'az';
+        let neededStates = new Set([mt, wa, or, id, nv, ut, ca, az]);
+        let stations = new Map();
+        stations.set('1', new Set([id, nv, ut]));
+        stations.set('2', new Set([wa, id, mt]));
+        stations.set('3', new Set([or, nv, ca]));
+        stations.set('4', new Set([nv, ut]));
+        stations.set('5', new Set([ca, az]));
+        
+        let neededStations = Sets.greedyCoverage(neededStates, stations);
+        let neededStationsNames = '';
+        for(let item of neededStations) {
+            neededStationsNames += item[0];
+        }
+
+        console.assert(neededStationsNames === '1235', 'Needed staions are 1,2,3,5');
+
+
+    </script>
+</body>
+</html>
